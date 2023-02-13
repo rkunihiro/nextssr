@@ -1,0 +1,7 @@
+/.idea
+/.vscode
+/.next
+/docker
+/node_modules
+/Dockerfile
+/compose.yaml

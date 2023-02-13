@@ -1,0 +1,34 @@
+services:
+  node:
+    container_name: nextssr-container-node
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      LANG: C.UTF-8
+      TZ: UTC
+    networks:
+      - default
+    ports:
+      - 3000:3000
+
+  nginx:
+    container_name: nextssr-container-nginx
+    image: nginx:1.23.3
+    depends_on:
+      - node
+    environment:
+      LANG: C.UTF-8
+      TZ: UTC
+    networks:
+      - default
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./docker/nginx/cert:/etc/ssl/certs:ro
+      - ./docker/nginx/conf:/etc/nginx/conf.d:ro
+
+networks:
+  default:
+    name: nextssr-network-default
